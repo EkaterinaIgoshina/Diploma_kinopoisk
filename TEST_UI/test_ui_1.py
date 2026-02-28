@@ -18,6 +18,7 @@ class TestMovieSearch:
     @allure.title("Проверка поиска фильма")
     @allure.description("Проверка функциональности поиска фильма на сайте Кинопоиск.")
     @allure.feature("Поиск фильма")
+    @allure.story("Поиск фильма по названию")
     @allure.severity(allure.severity_level.NORMAL)
     def test_search_movie(self, setup):
         """Тест для проверки поиска фильма."""

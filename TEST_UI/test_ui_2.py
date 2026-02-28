@@ -13,6 +13,7 @@ def setup():
 
 @allure.feature("Проверка работы фильтров в разделе фильмов")
 class TestFilters:
+    @allure.story("Фильтрация фильмов по жанру")
     @allure.title("Проверка фильтров для жанра 'Комедии'")
     def test_genre_filter(self, setup):
         with setup as driver:

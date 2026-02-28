@@ -20,6 +20,7 @@ class TestMovieSearch:
     @allure.title("Проверка поиска фильма по части названия")
     @allure.description("Проверка функциональности поиска фильма на сайте Кинопоиск по части названия.")
     @allure.feature("Поиск фильма")
+    @allure.story("Поиск фильма по частичному названию")
     @allure.severity(allure.severity_level.NORMAL)
     def test_search_movie_partial_title(self, setup):
         """Тест для проверки поиска фильма по части названия."""
@@ -41,7 +42,8 @@ class TestMovieSearch:
             assert len(results) > 0, "Результаты поиска не найдены."
 
         with allure.step("Проверка первого результата"):
-            first_result_name = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, '.element .info .name a'))).text
+            first_result_name = wait.until(EC.visibility_of_element_located(
+                (By.CSS_SELECTOR, '.element .info .name a'))).text
             assert 'Царство' in first_result_name, f"Ожидалось, что '{first_result_name}' будет содержать 'Царство'."
 
 

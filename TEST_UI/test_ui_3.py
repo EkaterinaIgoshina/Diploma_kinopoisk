@@ -18,6 +18,7 @@ class TestMoviePage:
     @allure.title("Проверка наличия страницы фильма 'Кракен'")
     @allure.description("Проверка, что страница фильма 'Кракен' загружается корректно.")
     @allure.feature("Проверка страницы фильма")
+    @allure.story("Проверка страницы фильма по названию")
     @allure.severity(allure.severity_level.CRITICAL)
     def test_movie_page_exists(self, setup):
         """Тест для проверки наличия страницы фильма 'Кракен'."""

@@ -13,6 +13,7 @@ def setup():
 
 @allure.feature("Проверка работы с Телеканалами")
 class TestChannels:
+    @allure.story("Навигация по разделу Телеканалы")
     @allure.title("Проверка перехода на страницу Телеканалы")
     def test_navigate_to_channels(self, setup):
         driver = setup
