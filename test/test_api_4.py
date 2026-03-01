@@ -1,3 +1,4 @@
+import pytest
 import allure
 from kinopoisk_page_api_4 import CinemaPage
 from dotenv import load_dotenv
@@ -14,7 +15,9 @@ my_headers = {
 
 kino = CinemaPage(base_url, my_headers)
 
+@pytest.mark.api
 @allure.feature("Сайт Кинопоиск - библиотека фильмов и сериалов")
+@allure.story("Проверка обработки несуществующего ID")
 @allure.title("API тестирование несуществующего ID")
 @allure.severity("Critical")
 def test_api_nonexistent_id() -> None:
@@ -24,4 +27,6 @@ def test_api_nonexistent_id() -> None:
     with allure.step("Запрос фильма по несуществующему ID"):
         actual_name = kino.get_movie_by_id(movie_id)
 
-    assert actual_name == expected_name, f"Ожидалось название: '{expected_name}', фактическое: '{actual_name}'"
+    with allure.step("Проверка, что фактическое имя совпадает с ожидаемым"):
+        assert actual_name == expected_name, (f"Ожидалось название: '{expected_name}',"
+                                          f" фактическое: '{actual_name}'")

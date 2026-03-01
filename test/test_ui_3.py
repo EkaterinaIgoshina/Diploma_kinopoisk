@@ -4,6 +4,7 @@ import allure
 from kinopoisk_page_ui_3 import KinopoiskPage
 
 
+@pytest.mark.ui
 class TestMoviePage:
     @pytest.fixture(scope="class")
     def setup(self, request):

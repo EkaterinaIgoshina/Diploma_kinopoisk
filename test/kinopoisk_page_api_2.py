@@ -7,6 +7,7 @@ class CinemaPage:
         self.base_url = base_url
         self.my_headers = my_headers
 
+    @allure.story("Поиск фильма по названию")
     def search_movie(self, cinema_name):
         """Запрос фильма по названию."""
         with allure.step(f"Запрос фильма по названию - {cinema_name}"):
@@ -29,14 +30,18 @@ class CinemaPage:
                 print(f"Ошибка запроса: {e}")
                 return None
 
+    @allure.story("Получение ID фильма")
     def get_movie_id(self, cinema_name, ref_id):
         """Получение ID фильма по названию и референсному ID."""
-        cinema_data = self.search_movie(cinema_name)
-        if cinema_data:
-            list_id = [movie.get('id') for movie in cinema_data.get("docs", [])]
-            if ref_id in list_id:
-                with allure.step(f"ID фильма = {ref_id}"):
-                    return ref_id
+        with allure.step(f"Начинаем поиск ID для фильма '{cinema_name}'"
+                         f" с референсным ID '{ref_id}'"
+            ):
+            cinema_data = self.search_movie(cinema_name)
+            if cinema_data:
+                list_id = [movie.get('id') for movie in cinema_data.get("docs", [])]
+                if ref_id in list_id:
+                    with allure.step(f"ID фильма = {ref_id}"):
+                        return ref_id
         return None
 
 

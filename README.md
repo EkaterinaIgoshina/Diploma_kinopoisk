@@ -14,9 +14,9 @@
      
 
 ## Запуск тестов.
-     pytest TEST_API - запуск только API-тестов;
-     pytest TEST_UI - запуск только ui- тестов;
-     pytest TEST_API TEST_UI - запуск api и ui тестов;
+     pytest -m api - запуск только api-тестов;
+     pytest -m ui - запуск только ui-тестов;
+     pytest -m "api or ui" - запуск api и ui тестов;
      pytes --alluredir=./allure-result - запуск тестов с генерацией отчёта в папке allure-result;
      allure serve allure-result - создание веб-отчёта по результатам тестирования.
 

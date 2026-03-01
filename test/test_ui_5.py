@@ -3,6 +3,7 @@ import allure
 from selenium import webdriver
 from kinopoisk_page_ui_5 import KinopoiskPage
 
+
 @pytest.fixture(scope="function")
 def setup():
     driver = webdriver.Chrome()
@@ -12,6 +13,7 @@ def setup():
     driver.quit()
 
 @allure.feature("Проверка работы с Телеканалами")
+@pytest.mark.ui
 class TestChannels:
     @allure.story("Навигация по разделу Телеканалы")
     @allure.title("Проверка перехода на страницу Телеканалы")

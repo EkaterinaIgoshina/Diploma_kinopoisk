@@ -7,6 +7,7 @@ import allure
 
 load_dotenv()
 key = os.getenv("X-API-KEY")
+@pytest.mark.api
 class TestCinemaAPI:
 
     @pytest.fixture
@@ -19,6 +20,7 @@ class TestCinemaAPI:
         return CinemaPage(base_url, my_headers)
 
     @allure.feature("API тестирование - получение ID фильма")
+    @allure.story("Успешное получение ID фильма")
     @allure.title("Тест успешного получения ID фильма")
     @allure.severity("Critical")
     def test_get_movie_id_success(self, cinema_api):
@@ -28,6 +30,7 @@ class TestCinemaAPI:
         with allure.step("Проверка ожидаемого ID"):
             assert cinema_id == 2602, "Ожидался ID = 2602"
     @allure.feature("API тестирование - получение ID фильма")
+    @allure.story("Обработка случая, когда фильм не найден")
     @allure.title("Тест на случай, если фильм не найден")
     @allure.severity("Major")
     def test_get_movie_id_not_found(self, cinema_api):
@@ -38,6 +41,7 @@ class TestCinemaAPI:
             assert cinema_id is None, "Ожидался None для несуществующего фильма"
 
     @allure.feature("API тестирование - получение ID фильма")
+    @allure.story("Обработка ошибок API")
     @allure.title("Тест для обработки ошибки API")
     @allure.severity("Critical")
     def test_get_movie_id_api_error(self, cinema_api):

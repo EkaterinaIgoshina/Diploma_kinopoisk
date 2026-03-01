@@ -1,12 +1,14 @@
 import requests
 import allure
+from typing import Optional, Dict, Union
 
 class CinemaPage:
-    def __init__(self, base_url, my_headers):
-        self.base_url = base_url
-        self.my_headers = my_headers
+    def __init__(self, base_url: str, my_headers: Dict[str, Union[str, None]]) -> None:
+        self.base_url: str = base_url
+        self.my_headers: Dict[str, Union[str, None]] = my_headers
 
-    def get_movie_by_id(self, movie_id):
+    @allure.story("Получение информации о фильме по ID")
+    def get_movie_by_id(self, movie_id: str) -> Optional[str]:
         with allure.step(f"Запрос фильма по ID: {movie_id}"):
             try:
                 response = requests.get(f'{self.base_url}v1.4/movie/{movie_id}', headers=self.my_headers)

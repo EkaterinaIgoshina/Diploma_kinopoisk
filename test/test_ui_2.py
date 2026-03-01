@@ -3,6 +3,7 @@ import pytest
 from selenium import webdriver
 from kinopoisk_page_ui_2 import KinopoiskPage
 
+
 @pytest.fixture(scope="function")
 def setup():
     driver = webdriver.Chrome()
@@ -12,6 +13,7 @@ def setup():
     driver.quit()
 
 @allure.feature("Проверка работы фильтров в разделе фильмов")
+@pytest.mark.ui
 class TestFilters:
     @allure.story("Фильтрация фильмов по жанру")
     @allure.title("Проверка фильтров для жанра 'Комедии'")
