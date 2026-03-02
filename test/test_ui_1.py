@@ -4,7 +4,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import allure
+from dotenv import load_dotenv
+import os
 
+
+load_dotenv()
+KINOPOISK_URL = os.getenv('KINOPOISK_URL')
 
 @pytest.mark.ui
 class TestMovieSearch:
@@ -25,7 +30,8 @@ class TestMovieSearch:
     def test_search_movie(self, setup):
         """Тест для проверки поиска фильма."""
         driver = setup
-        driver.get('https://www.kinopoisk.ru')
+        print(f"Используемый URL: {KINOPOISK_URL}")
+        driver.get(KINOPOISK_URL)
 
         wait = WebDriverWait(driver,20)
 
