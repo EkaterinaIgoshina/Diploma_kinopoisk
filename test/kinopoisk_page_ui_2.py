@@ -1,7 +1,14 @@
 import allure
+import os
+import requests
+from dotenv import load_dotenv
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+
+
+load_dotenv()
+KINOPOISK_URL = os.getenv('KINOPOISK_URL')
 
 class KinopoiskPage:
     def __init__(self, driver):
@@ -10,7 +17,12 @@ class KinopoiskPage:
     @allure.step("Открыть главную страницу Кинопоиска")
     @allure.story("Открытие главной страницы")
     def open(self):
-        self.driver.get('https://www.kinopoisk.ru')
+        response = requests.get(KINOPOISK_URL) #Проверяем статус ответа
+        if response.status_code == 401:
+            allure.attach("Authorization Error", "Доступ запрещен. Проверьте учетные данные.")
+            raise Exception("Unauthorized access. Please check your credentials.")
+
+        self.driver.get(KINOPOISK_URL)
 
     @allure.step("Перейти в раздел фильмов")
     @allure.story("Навигация в раздел фильмов")

@@ -1,3 +1,4 @@
+import requests
 import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -16,7 +17,6 @@ class TestMovieSearch:
     @pytest.fixture(scope="class")
     def setup(self):
         """Инициализация драйвера."""
-
         driver = webdriver.Chrome()
         driver.implicitly_wait(30)
         yield driver
@@ -31,8 +31,14 @@ class TestMovieSearch:
         """Тест для проверки поиска фильма."""
         driver = setup
         print(f"Используемый URL: {KINOPOISK_URL}")
-        driver.get(KINOPOISK_URL)
 
+        # Проверка статуса 401 перед выполнением запроса
+        response = requests.get(KINOPOISK_URL)
+        if response.status_code == 401:
+            allure.attach("Authorization Error", "Доступ запрещен. Проверьте учетные данные.")
+            pytest.fail("Unauthorized access. Please check your credentials.")
+
+        driver.get(KINOPOISK_URL)
         wait = WebDriverWait(driver,20)
 
         with allure.step("Поиск фильма 'Кракен'"):

@@ -51,11 +51,3 @@ class TestCinemaAPI:
         with allure.step("Проверка, что ID равен None"):
             assert cinema_id is None, "Ожидался None для фильма с неправильным ID"
 
-
-
-
-
-
-
-
-

@@ -1,10 +1,16 @@
 import pytest
+import requests
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import allure
+from dotenv import load_dotenv
+import os
 
+
+load_dotenv()
+KINOPOISK_URL = os.getenv('KINOPOISK_URL')
 
 @pytest.mark.ui
 class TestMovieSearch:
@@ -27,7 +33,13 @@ class TestMovieSearch:
     def test_search_movie_partial_title(self, setup):
         """Тест для проверки поиска фильма по части названия."""
         driver = setup
-        driver.get('https://www.kinopoisk.ru')
+        # Проверка статуса 401 перед выполнением запроса
+        response = requests.get(KINOPOISK_URL)
+        if response.status_code == 401:
+            allure.attach("Authorization Error", "Доступ запрещен. Проверьте учетные данные.")
+            pytest.fail("Unauthorized access. Please check your credentials.")
+
+        driver.get(KINOPOISK_URL)
 
         wait = WebDriverWait(driver, 20)
 

@@ -3,9 +3,9 @@ import allure
 from typing import Optional, Dict, Union
 
 class CinemaPage:
-    def __init__(self, base_url: str, my_headers: Dict[str, Union[str, None]]) -> None:
+    def __init__(self, base_url:str,  my_headers: Dict[str, Union[str, None]]) -> None:
         self.base_url: str = base_url
-        self.my_headers: Dict[str, Union[str, None]] = my_headers
+        self.my_headers: dict[str, Union[str, None]] = my_headers
 
     @allure.story("Получение информации о фильме по ID")
     def get_movie_by_id(self, movie_id: str) -> Optional[str]:
@@ -20,6 +20,10 @@ class CinemaPage:
                     elif response.status_code == 404:
                         print("По этому ID ничего не найдено!")
                         return None
+                    elif response.status_code == 401:
+                        print("Ошибка авторизации: доступ запрещен.")
+                        allure.attach("Authorization Error", "Доступ запрещен. Проверьте учетные данные.")
+                        raise Exception("Unauthorized access. Please check your credentials.")
                     else:
                         print(f"Ошибка API: {response.status_code}")
             except requests.exceptions.RequestException as e:
